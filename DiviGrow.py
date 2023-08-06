@@ -5,12 +5,12 @@ from datetime import datetime
 
 class DividendCalculator:
     @staticmethod
-    def calculate(qtd_cotas, preco_cota, dividendo_cota, resultado_dividendos, tempo_investimento):
+    def calculate(qtd_cotas, preco_cota, dividendo_cota, resultado_dividendos, tempo_investimento, qtd_compra):
         ano = int(datetime.now().strftime("%Y"))
         for _ in range(tempo_investimento):
             for _ in range(12):
                 resultado_dividendos += qtd_cotas * dividendo_cota
-                qtd_cotas += round(resultado_dividendos / preco_cota) + 1
+                qtd_cotas += round(resultado_dividendos / preco_cota) + qtd_compra
             ano += 1
 
         return {
@@ -40,6 +40,9 @@ class DividendCalculatorApp(tk.Tk):
         self.entry_resultado_div = Entry(self.label_frame_input, width=10)
         self.label_tempo_invest = Label(self.label_frame_input, text='Tempo de investimento (Em anos):')
         self.entry_tempo_invest = Entry(self.label_frame_input, width=10)
+        
+        self.label_qtd_compra = Label(self.label_frame_input, text='Quantidade de cotas por mês:')
+        self.entry_qtd_compra = Entry(self.label_frame_input, width=10)
 
         self.label_frame_input.grid(row=0, column=0, padx=10, pady=10)
         self.label_qtd_cotas.grid(row=0, column=0, sticky='W')
@@ -52,9 +55,11 @@ class DividendCalculatorApp(tk.Tk):
         self.entry_resultado_div.grid(row=3, column=1, padx=5)
         self.label_tempo_invest.grid(row=4, column=0, sticky='W')
         self.entry_tempo_invest.grid(row=4, column=1, padx=5)
+        self.label_qtd_compra.grid(row=5, column=0, sticky='W')
+        self.entry_qtd_compra.grid(row=5, column=1)
 
         self.button_calculate = Button(self.label_frame_input, text='Calcular', command=self._calculate_dividends)
-        self.button_calculate.grid(row=5, column=1, pady=5)
+        self.button_calculate.grid(row=6, column=1, pady=5)
 
         self.label_frame_result = LabelFrame(self, text='Resultado')
         self.label_frame_result.grid(row=0, column=1, padx=10, pady=10, sticky='W')
@@ -76,9 +81,17 @@ class DividendCalculatorApp(tk.Tk):
         dividendo_cota = float(self.entry_ult_divid.get())
         resultado_dividendos = float(self.entry_resultado_div.get())
         tempo_investimento = int(self.entry_tempo_invest.get())
-
+        qtd_compra = int(self.entry_qtd_compra.get())
+    
         calculator = DividendCalculator()
-        result = calculator.calculate(qtd_cotas, preco_cota, dividendo_cota, resultado_dividendos, tempo_investimento)
+        result = calculator.calculate(
+            qtd_cotas=qtd_cotas,
+            preco_cota=preco_cota,
+            dividendo_cota=dividendo_cota,
+            resultado_dividendos=resultado_dividendos,
+            tempo_investimento=tempo_investimento,
+            qtd_compra=qtd_compra
+        )
 
         self.label_result_ano_final.config(text='Ano Final: ' + str(result['Ano Final']))
         self.label_result_qtd_cotas.config(text='Quantidade de Cotas: ' + str(result['Quantidade de Cotas']))
