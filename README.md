@@ -19,7 +19,7 @@ DiviGrow é uma calculadora interativa que permite aos investidores estimar o cr
 1. Certifique-se de ter o Python 3.x instalado em seu sistema.
 2. Faça o download ou clone o repositório em seu computador.
 3. Navegue até o diretório do projeto.
-4. Execute o arquivo `main.py` para iniciar o DiviGrow.
+4. Execute o arquivo `DiviGrow.py` para iniciar o DiviGrow.
 
 ## Faça seus dividendos crescerem com o DiviGrow
 
