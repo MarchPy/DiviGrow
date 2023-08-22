@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from tkinter.ttk import LabelFrame, Label, Entry, Button
 from datetime import datetime
 
@@ -82,25 +83,34 @@ class DividendCalculatorApp(tk.Tk):
         self.label_resultado_divid.grid(row=3, column=0, sticky='W')
 
     def _calculate_dividends(self):
-        qtd_cotas = int(self.entry_qtd_cotas.get())
-        preco_cota = float(self.entry_preco_cota.get())
-        dividendo_cota = float(self.entry_ult_divid.get())
-        tempo_investimento = int(self.entry_tempo_invest.get())
-        qtd_compra = int(self.entry_qtd_compra.get())
-    
-        calculator = DividendCalculator()
-        result = calculator.calculate(
-            quantidade_cotas=qtd_cotas,
-            preco_cota=preco_cota,
-            media_dividendos=dividendo_cota,
-            tempo_investimento=tempo_investimento,
-            qtd_compra=qtd_compra
-        )
+        try:
+            qtd_cotas = int(self.entry_qtd_cotas.get())
+            preco_cota = float(self.entry_preco_cota.get())
+            dividendo_cota = float(self.entry_ult_divid.get())
+            tempo_investimento = int(self.entry_tempo_invest.get())
+            qtd_compra = int(self.entry_qtd_compra.get())
 
-        self.label_result_ano_final.config(text='Ano Final: ' + str(result['Ano Final']))
-        self.label_result_qtd_cotas.config(text='Quantidade de Cotas: ' + str(result['Quantidade de Cotas']))
-        self.label_result_valor_total.config(text='Valor Total Investido: ' + str(result['Valor Total Investido']))
-        self.label_resultado_divid.config(text='Resultado Total de Dividendos: ' + str(result['Recebimento de dividendos (último mês)']))
+            calculator = DividendCalculator()
+            result = calculator.calculate(
+                quantidade_cotas=qtd_cotas,
+                preco_cota=preco_cota,
+                media_dividendos=dividendo_cota,
+                tempo_investimento=tempo_investimento,
+                qtd_compra=qtd_compra
+            )
+
+        except ValueError:
+            # Mostra uma mensagem de erro se os valores não forem válidos
+            messagebox.showerror("Erro", "Por favor, insira valores válidos.")
+
+        try:
+            self.label_result_ano_final.config(text='Ano Final: ' + str(result['Ano Final']))
+            self.label_result_qtd_cotas.config(text='Quantidade de Cotas: ' + str(result['Quantidade de Cotas']))
+            self.label_result_valor_total.config(text='Valor Total Investido: ' + str(result['Valor Total Investido']))
+            self.label_resultado_divid.config(text='Resultado Total de Dividendos: ' + str(result['Recebimento de dividendos (último mês)']))
+            
+        except UnboundLocalError:
+            pass
 
 if __name__ == '__main__':
     app = DividendCalculatorApp()
