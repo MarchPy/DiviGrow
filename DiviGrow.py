@@ -1,4 +1,6 @@
+import os
 import tkinter as tk
+import pandas as pd
 from tkinter import messagebox
 from tkinter.ttk import LabelFrame, Label, Entry, Button
 from datetime import datetime
@@ -7,20 +9,31 @@ from datetime import datetime
 class DividendCalculator:
     @staticmethod
     def calculate(qtd_cotas, preco_cota, media_dividendos, tempo_investimento, qtd_compra):
-
+        df = pd.DataFrame()
+        
         ano_atual = int(datetime.now().strftime("%Y"))
         for ano in range(ano_atual, ano_atual + tempo_investimento + 1):
-            for _ in range(1, 13):
+            for mes in range(1, 13):
                 retorno_dividendos = qtd_cotas * media_dividendos
                 qtd_cotas += int(retorno_dividendos / preco_cota) + qtd_compra
-
+                line = {
+                    'Ano': [ano],
+                    'Mês': [mes],
+                    'Quantidade de Cotas': [qtd_cotas],
+                    'Valor Total Investido': [round(qtd_cotas * preco_cota, 2)],
+                    'Retorno de dividendos': [round(retorno_dividendos, 2)],
+                }
+                df_tmp = pd.DataFrame(line)
+                df = pd.concat([df, df_tmp])
+        
+        df.to_excel("Resultado dos juros compostos.xlsx", index=True)
+          
         data = {
             'Ano Final': ano,
             'Quantidade de Cotas': qtd_cotas,
             'Valor Total Investido': round(qtd_cotas * preco_cota, 2),
             'Recebimento de dividendos (último mês)': round(retorno_dividendos, 2),
         }
-        print(data)
         return data
 
 class DividendCalculatorApp(tk.Tk):
@@ -28,7 +41,7 @@ class DividendCalculatorApp(tk.Tk):
         super().__init__()
         self.title('Calculadora de Dividendos')
         self.resizable(width=False, height=False)
-        self.iconbitmap('image/dividends-icon.ico') 
+        self.iconbitmap(os.path.join(os.getcwd(), 'image/dividends-icon.ico')) 
         self._create_widgets()
         self._init_result_labels()
 
