@@ -6,19 +6,19 @@ from datetime import datetime
 
 class DividendCalculator:
     @staticmethod
-    def calculate(quantidade_cotas, preco_cota, media_dividendos, tempo_investimento, qtd_compra):
-        ano = int(datetime.now().strftime("%Y"))
-        for _ in range(tempo_investimento + 1):
-            for mes in range(1, 13):
-                recebimento_dividendos = quantidade_cotas * media_dividendos
-                quantidade_cotas += round(recebimento_dividendos / preco_cota) + qtd_compra
-                ano += 1
+    def calculate(qtd_cotas, preco_cota, media_dividendos, tempo_investimento, qtd_compra):
+        retorno_dividendos = 0
+        ano_atual = int(datetime.now().strftime("%Y"))
+        for ano in range(ano_atual, ano_atual + tempo_investimento + 1):
+            for _ in range(1, 13):
+                retorno_dividendos += qtd_cotas * media_dividendos
+                qtd_cotas += int(retorno_dividendos / preco_cota) + qtd_compra
 
         return {
             'Ano Final': ano,
-            'Quantidade de Cotas': quantidade_cotas,
-            'Valor Total Investido': round(quantidade_cotas * preco_cota, 2),
-            'Recebimento de dividendos (último mês)': round(quantidade_cotas * media_dividendos, 2),
+            'Quantidade de Cotas': qtd_cotas,
+            'Valor Total Investido': round(qtd_cotas * preco_cota, 2),
+            'Recebimento de dividendos (último mês)': round(retorno_dividendos, 2),
         }
 
 class DividendCalculatorApp(tk.Tk):
@@ -80,7 +80,7 @@ class DividendCalculatorApp(tk.Tk):
 
             calculator = DividendCalculator()
             result = calculator.calculate(
-                quantidade_cotas=qtd_cotas,
+                qtd_cotas=qtd_cotas,
                 preco_cota=preco_cota,
                 media_dividendos=dividendo_cota,
                 tempo_investimento=tempo_investimento,
