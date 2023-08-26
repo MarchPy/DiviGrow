@@ -12,8 +12,6 @@ class DividendCalculator:
         for ano in range(ano_atual, ano_atual + tempo_investimento + 1):
             for _ in range(1, 13):
                 retorno_dividendos = qtd_cotas * media_dividendos
-                print(f"[Qtd. cotas] {qtd_cotas} [media_div] {media_dividendos} [resultado] {retorno_dividendos}")
-                
                 qtd_cotas += int(retorno_dividendos / preco_cota) + qtd_compra
 
         data = {

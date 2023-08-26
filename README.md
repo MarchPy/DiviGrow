@@ -26,9 +26,9 @@ DiviGrow é uma calculadora interativa que permite aos investidores estimar o cr
 1. Insira os parâmetros do seu investimento nos campos apropriados:
    * Quantidade de cotas: O número de cotas do fundo de investimento que você possui.
    * Preço da cota: O preço atual da cota do fundo de investimento.
-   * Último dividendo da cota: O valor do último dividendo pago por cada cota.
-   * Resultado dos dividendos: O total de dividendos acumulados até o momento.
+   * Média de dividendos da cota: O valor do último dividendo pago por cada cota.
    * Tempo de investimento (Em anos): O período de tempo que deseja calcular o crescimento dos dividendos.
+   * Quantidade de cotas por mês: Quantidade de cotas que seram compradas por mês
 2. Clique no botão "Calcular" e veja o DiviGrow prever o crescimento dos seus dividendos.
 3. O resultado será exibido no lado direito da janela, mostrando o ano final, a quantidade de cotas, o valor total investido e o resultado total dos dividendos após o período de investimento especificado.
 
