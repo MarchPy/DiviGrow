@@ -26,7 +26,7 @@ class DividendCalculator:
                 df_tmp = pd.DataFrame(line)
                 df = pd.concat([df, df_tmp])
         
-        df.to_excel("Resultado dos juros compostos.xlsx", index=True)
+        df.to_excel("Resultado dos juros compostos.xlsx", index=False)
           
         data = {
             'Ano Final': ano,
